@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<style> 
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+<p>Search Suggest Demo: </p>
+
+<input id="txt" type="text" name="search" placeholder="Search.." value="" onpropertychange="handle();" oninput="handle();"/>
+<br/>
+<p id="msg"></p>
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script> 
+function handle()   
+{
+  var searchKey = document.getElementById('txt').value;
+  var pd = {"searchKey": searchKey};
+  $.ajax({
+    type: "post",
+    url: "/",
+    data: pd,
+    success:function(data){
+      var strs = new Array();
+      strs = data.split(";");
+      var res = "";
+      for (i=0; i<strs.length; i++ ){
+        res += strs[i] + "<br/>";
+      }
+      document.getElementById('msg').innerHTML = res;
+      //document.getElementById('msg').innerHTML = 'Suggest：' + document.getElementById('txt').value;
+      //alert(data);
+    },
+    error:function(){
+      alert("error!");
+    },
+  });
+}   
+</script>
+</body>
+</html>

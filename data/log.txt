@@ -1,0 +1,7 @@
+computer
+cat
+programming
+python
+php
+java
+javascript
